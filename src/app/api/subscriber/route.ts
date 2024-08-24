@@ -1,29 +1,37 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import zmq from 'zeromq';
 
-export async function GET() {
+export async function POST(request: NextRequest) {
+
+  const { message: channel } = await request.json();
+  
   try {
     const subscriberSocket = zmq.socket('sub');
     subscriberSocket.connect('tcp://127.0.0.1:3001');
-    subscriberSocket.subscribe('Brilliant Classics');
+    subscriberSocket.subscribe(channel);
 
-    return new Promise((resolve, reject) => {
+    const messagePromise = new Promise((resolve, reject) => {
       subscriberSocket.on('message', function(topic, message) {
-        console.log('Mensagem recebida:', Buffer.from(message).toString());
+        const topicString = Buffer.from(topic).toString();
+        const messageString = JSON.parse(Buffer.from(message).toString());
+        
+        console.log('Mensagem recebida:', messageString);
+        console.log('Tópico:', topicString);
 
-        // Retorna a resposta ao cliente quando uma mensagem é recebida
-        resolve(NextResponse.json({ message: message.toString() }));
+        resolve({ topic: topicString, message: messageString });
 
-        // Feche o socket após receber a mensagem
-        subscriberSocket.close();
+        
       });
 
-      // Timeout se nenhuma mensagem for recebida
-      setTimeout(() => {
-        subscriberSocket.close();
-        reject(NextResponse.json({ error: 'Timeout - Nenhuma mensagem recebida' }, { status: 500 }));
-      }, 5000); // Espera até 5 segundos por uma mensagem
+      subscriberSocket.on('error', (err) => {
+        reject(err);
+      });
     });
+
+    const result = await messagePromise;
+    const dataForResponse = JSON.stringify(result)
+    return NextResponse.json({ success: true, message: dataForResponse }, { status: 200 });
+
   } catch (error) {
     console.error('Erro ao receber mensagem:', error);
     return NextResponse.json({ success: false, error: 'Falha ao receber mensagem' }, { status: 500 });
