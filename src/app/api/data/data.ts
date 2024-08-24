@@ -33,7 +33,8 @@ export  interface Canal {
       videos: [
         { url: "https://www.youtube.com/embed/LarDFtcV8bs?si=tc43Lp_V1cZyh3PX" },
         { url: "https://www.youtube.com/embed/-1rzOP7TpOk?si=TPUQ3yDwZfPoFeqL" },
-        { url: "https://www.youtube.com/embed/pnYL7kfCvac?si=Mzp8nICMUMGYHE4T" }
+        { url: "https://www.youtube.com/embed/pnYL7kfCvac?si=Mzp8nICMUMGYHE4T" },
+        { url: "https://www.youtube.com/embed/1J9X1" }
       ]
     }
   ];
