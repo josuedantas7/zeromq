@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import Banner from "@/app/components/Banner/Banner";
 import axios from "axios";
 import { Canal } from "@/app/api/data/data";
-import Image from "next/image";
-import gif from '@/app/assets/Spinner@1x-1.0s-200px-200px.gif'
+import { FaArrowLeftLong } from "react-icons/fa6";
+import Link from "next/link";
+
 export default function Channel({ params }: { params: { params: string } }) {
   const [channel, setChannel] = useState(null);
   const [channelSelected, setChannelSelected] = useState<Canal>();
@@ -47,6 +48,10 @@ export default function Channel({ params }: { params: { params: string } }) {
     <div>
       <div className="flex flex-col">
         <Banner banner={channelSelected ? channelSelected.message?.img_canal : ''} />
+        <Link href={'/'} className="flex items-center gap-2 hover:underline ml-8 translate-y-6 duration-500 max-[600px]:ml-2">
+            <FaArrowLeftLong/>
+            <span>Voltar</span>
+        </Link>
         <div className="mb-12">
           <h1 className="font-semibold text-3xl text-center">Player</h1>
         </div>
