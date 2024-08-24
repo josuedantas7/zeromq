@@ -1,4 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    domains: [
+      "yt3.ggpht.com",
+      "cdn.fonotecaparadis.ro",
+      "images-ext-1.discordapp.net",
+      "cdn.pixabay.com",
+    ],
+  },
+};
 
 export default nextConfig;
