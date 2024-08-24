@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import zmq from 'zeromq';
-import db from '../utils/db'
+import db from '../../utils/db'
 
 let publisherSocket: zmq.Socket | null = null;
 let isBound = false;
@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
   if (channel) {
     dataChannel = await db.canal.findFirst({
       where: {
-        nome: channel
+        id: channel
       },
       include: {
         videos: true
@@ -45,17 +45,16 @@ export async function POST(request: NextRequest) {
     await ensureSocket();
 
     // Envia a primeira mensagem
-    publisherSocket.send([channel, JSON.stringify(dataChannel)]);
+    publisherSocket?.send([channel, JSON.stringify(dataChannel)]);
 
     // Configura o intervalo de envio de mensagens
     setInterval(function () {
       console.log("Enviando uma mensagem multipart...");
-      publisherSocket.send([channel, JSON.stringify(dataChannel)]);
+      publisherSocket?.send([channel, JSON.stringify(dataChannel)]);
     }, 500);
 
     return NextResponse.json({ success: true, message: 'Mensagem enviada!' });
   } catch (error) {
-    console.error('Erro ao enviar a mensagem via ZeroMQ:', error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: "Erro ao enviar a mensagem via ZeroMQ" }, { status: 500 });
   }
 }
