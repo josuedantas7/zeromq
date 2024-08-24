@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Banner from "@/app/components/Banner/Banner";
 import axios from "axios";
 import { Canal } from "@/app/api/data/data";
+import Image from "next/image";
+import gif from '@/app/assets/Spinner@1x-1.0s-200px-200px.gif'
 export default function Channel({ params }: { params: { params: string } }) {
   const [channel, setChannel] = useState(null);
   const [channelSelected, setChannelSelected] = useState<Canal>();
@@ -30,7 +32,11 @@ export default function Channel({ params }: { params: { params: string } }) {
   }, [params.params]);
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+        <div className="flex justify-center items-center w-full h-full mt-32">
+            <Image src={gif} width={500} height={500} alt="GIF"/>
+        </div>
+    )
   }
 
   return (

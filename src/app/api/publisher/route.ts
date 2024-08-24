@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     setInterval(function () {
       console.log("Enviando uma mensagem multipart...");
       publisherSocket?.send([channel, JSON.stringify(dataChannel)]);
-    }, 500);
+    }, 5000);
 
     return NextResponse.json({ success: true, message: 'Mensagem enviada!' });
   } catch (error) {

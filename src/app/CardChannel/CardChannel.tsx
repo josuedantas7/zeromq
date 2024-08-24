@@ -19,7 +19,7 @@ export function CardChannels() {
 
   return (
     <div className="flex justify-between max-[820px]:justify-center flex-wrap gap-6">
-      {channels && channels.length && channels.map((card:any) => (
+      {Boolean(channels) && Boolean(channels.length) && channels.map((card:any) => (
         <div className="rounded-md border-2 border-gray-500" key={card.id}>
           <div className="w-[282px] h-[425px] bg-black">
             <Link href={`channel/${card.id}`} className="cursor-pointer">

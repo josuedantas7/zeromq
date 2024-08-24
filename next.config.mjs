@@ -6,6 +6,7 @@ const nextConfig = {
       "cdn.fonotecaparadis.ro",
       "images-ext-1.discordapp.net",
       "cdn.pixabay.com",
+      "tenor.com",
     ],
   },
 };
