@@ -63,6 +63,7 @@ export default function Channel({ params }: { params: { params: string } }) {
               height="315"
               src={video.url}
               title="YouTube video player"
+              allowFullScreen={true}
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             ></iframe>
           ))}
